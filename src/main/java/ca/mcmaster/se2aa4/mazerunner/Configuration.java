@@ -1,40 +1,46 @@
 package ca.mcmaster.se2aa4.mazerunner;
 
+import org.apache.commons.cli.Options;
+import org.apache.commons.cli.CommandLine;
+import org.apache.commons.cli.CommandLineParser;
+import org.apache.commons.cli.DefaultParser;
+import org.apache.commons.cli.ParseException;
+
+import java.util.Objects;
+
 public class Configuration {
 
     private String[] args;
+    private Options options = new Options();
+    private CommandLineParser parser = new DefaultParser();
+
 
     public Configuration(String[] args) {
         this.args = args;
+        options.addOption("i","input",true,"input file");
+        options.addOption("p",true,"input path");
+
     }
 
-    public Object inputFile() {
+    public String inputFile() {
         String inputFile = null;
-        for (int i = 0; i < args.length; i++) {
-            if (args[i].equals("-i") || args[i].equals("--input")) {
-                if (i + 1 < args.length) {
-                    inputFile = args[i + 1];
-                    break;
-                }
-            }
-        }
+        try {
+            CommandLine cmd = parser.parse(options, args);
+            inputFile = cmd.getOptionValue("input","./examples/small.maz.txt");
+        }catch (ParseException pe){ }
         return inputFile;
     }
 
-    public Object inputPath() {
+    public String inputPath() {
         String inputPath = null;
-        for (int i = 0; i < args.length; i++) {
-            if (args[i].equals("-p")) {
-                if (i + 1 < args.length) {
-                    inputPath = args[i + 1];
-                    break;
-                }
-            }
-        }
+        try {
+            CommandLine cmd = parser.parse(options, args);
+            inputPath = cmd.getOptionValue("p");
+        }catch (ParseException pe){ }
         return inputPath;
     }
 
     public boolean validPath(Object inputPath, Object mazeSolution) {
-        return false;
+        return Objects.equals(inputPath,mazeSolution);
     }
 }

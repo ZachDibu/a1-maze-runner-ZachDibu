@@ -1,8 +1,5 @@
 package ca.mcmaster.se2aa4.mazerunner;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileReader;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -15,7 +12,7 @@ public class Main {
             logger.info("** Starting Maze Runner");
             Configuration config = new Configuration(args);//read configuration from command line
             Maze maze = new Maze(config.inputFile());
-            Object mazeSolution = maze.solution(); //determine the path to the exit
+            String mazeSolution = maze.solution(); //determine the path to the exit
             boolean valid = config.validPath(config.inputPath(), maze.solution());//determine if an input path is valid
             logger.info("**** Reading the maze from file " + config.inputFile());
 
