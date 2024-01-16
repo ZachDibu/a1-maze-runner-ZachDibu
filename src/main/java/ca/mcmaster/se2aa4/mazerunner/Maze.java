@@ -4,21 +4,20 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
+import java.sql.SQLOutput;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 public class Maze {
 
-    private String inputFile;
+    private String inputFile = null;
     public Maze(String inputFile) {
         this.inputFile = inputFile;
     }
 
     public String solution() {
-        String solution = "FFFF";
-
-        return solution;
+        return "FFFF";
     }
 
     public void printMaze(Logger logger) throws IOException {
@@ -27,12 +26,12 @@ public class Maze {
         while ((line = reader.readLine()) != null) {
             for (int idx = 0; idx < line.length(); idx++) {
                 if (line.charAt(idx) == '#') {
-                    logger.info("WALL ");
+                    System.out.print("WALL ");
                 } else if (line.charAt(idx) == ' ') {
-                    logger.info("PASS ");
+                    System.out.print("PASS ");
                 }
             }
-            logger.info(System.lineSeparator());
+            System.out.println(System.lineSeparator());
         }
     }
 }

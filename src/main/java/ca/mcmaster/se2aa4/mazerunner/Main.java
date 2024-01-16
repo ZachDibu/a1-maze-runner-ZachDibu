@@ -9,16 +9,20 @@ public class Main {
 
     public static void main(String[] args) {
         try {
-            logger.info("** Starting Maze Runner");
+            System.out.println("** Starting Maze Runner");
             Configuration config = new Configuration(args);//read configuration from command line
             Maze maze = new Maze(config.inputFile());
             String mazeSolution = maze.solution(); //determine the path to the exit
             boolean valid = config.validPath(config.inputPath(), maze.solution());//determine if an input path is valid
-            logger.info("**** Reading the maze from file " + config.inputFile());
+            System.out.println("**** Reading the maze from file " + config.inputFile());
             maze.printMaze(logger);
 
+
         } catch(Exception e){
-            logger.error("/!\\ An error has occured /!\\");
+            System.err.println("/!\\ An error has occured /!\\");
         }
+        System.out.println("**** Computing path");
+        System.out.println("PATH NOT COMPUTED");
+        System.out.println("** End of MazeRunner");
     }
 }

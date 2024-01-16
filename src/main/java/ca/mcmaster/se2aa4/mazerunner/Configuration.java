@@ -10,7 +10,7 @@ import java.util.Objects;
 
 public class Configuration {
 
-    private String[] args;
+    private String[] args = null;
     private Options options = new Options();
     private CommandLineParser parser = new DefaultParser();
 
@@ -22,21 +22,17 @@ public class Configuration {
 
     }
 
-    public String inputFile() {
+    public String inputFile() throws ParseException{
         String inputFile = null;
-        try {
-            CommandLine cmd = parser.parse(options, args);
-            inputFile = cmd.getOptionValue("input","./examples/small.maz.txt");
-        }catch (ParseException pe){ }
+        CommandLine cmd = parser.parse(options, args);
+        inputFile = cmd.getOptionValue("input","./examples/small.maz.txt");
         return inputFile;
     }
 
-    public String inputPath() {
+    public String inputPath() throws ParseException{
         String inputPath = null;
-        try {
-            CommandLine cmd = parser.parse(options, args);
-            inputPath = cmd.getOptionValue("p");
-        }catch (ParseException pe){ }
+        CommandLine cmd = parser.parse(options, args);
+        inputPath = cmd.getOptionValue("p");
         return inputPath;
     }
 
