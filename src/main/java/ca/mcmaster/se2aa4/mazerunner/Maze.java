@@ -47,6 +47,7 @@ public class Maze {
         }
     }
 
+
     public ArrayList<Tile>[][] mazeArray(){
         String type = null;
         Tile tile = new Tile(type);

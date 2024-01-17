@@ -36,6 +36,7 @@ public class Configuration {
         return inputPath;
     }
 
+
     public boolean validPath(Object inputPath, Object mazeSolution) {
         return Objects.equals(inputPath,mazeSolution);
     }
