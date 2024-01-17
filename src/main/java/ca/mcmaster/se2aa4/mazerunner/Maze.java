@@ -24,41 +24,70 @@ public class Maze {
         this.inputFile = inputFile;
     }
 
-    public String solution() {
-        PrimAlg alg = new PrimAlg(mazeArray());
-        return alg.solution;
-    }
 
-    public void printMaze(Logger logger) throws IOException {
-        BufferedReader reader = new BufferedReader(new FileReader(inputFile));
+    public void printMaze(Logger logger, BufferedReader reader) throws IOException {
         String line;
         while ((line = reader.readLine()) != null) {
             for (int idx = 0; idx < line.length(); idx++) {
                 if (line.charAt(idx) == '#') {
                     System.out.print("WALL ");
-                    width++;
+                    this.width++;
                 } else if (line.charAt(idx) == ' ') {
                     System.out.print("PASS ");
-                    width++;
+                    this.width++;
                 }
             }
             System.out.print(System.lineSeparator());
-            height++;
+            this.height++;
         }
     }
 
 
-    public ArrayList<Tile>[][] mazeArray(){
-        String type = null;
-        Tile tile = new Tile(type);
-        ArrayList<Tile>[][] map = new ArrayList[width][height];
-        for (int c = 0; c != width; c++){
-            for (int h = 0; h != height; h++){
+    public ArrayList<Tile>[][] mazeArray(BufferedReader reader) throws IOException{
+        ArrayList<Tile>[][] maze = new ArrayList[width][height];
+        String line;
+        int x = 0;
+        int y = 0;
 
+        while ((line = reader.readLine()) != null) {
+            for (int idx = 0; idx < line.length(); idx++) {
+                if (line.charAt(idx) == '#') {
+                    maze[x][y].add(new Tile("WALL",x,y));
+                    x++;
+                } else if (line.charAt(idx) == ' ') {
+                    maze[x][y].add(new Tile("PATH",x,y));
+                    x++;
+                }
             }
+            x = 0;
+            y++;
         }
-
-
-        return map;
+        return maze;
     }
+
+    public Tile getStart(ArrayList<Tile>[][] mazeArray) {
+        int x = 0;
+        int y = 0;
+        while (mazeArray[x][y].get(0).type != "PATH"){
+            y++;
+        }
+        return mazeArray[x][y].get(0);
+    }
+
+    public Tile getEnd(ArrayList<Tile>[][] mazeArray) {
+        int x = width;
+        int y = 0;
+        while (mazeArray[x][y].get(0).type != "PATH"){
+            y++;
+        }
+        return mazeArray[x][y].get(0);
+    }
+
+
+    public String solution(ArrayList<Tile>[][] maze, Tile start, Tile end) {
+        PrimAlg alg = new PrimAlg(maze, start, end);
+        return alg.solveMaze();
+    }
+
+
 }

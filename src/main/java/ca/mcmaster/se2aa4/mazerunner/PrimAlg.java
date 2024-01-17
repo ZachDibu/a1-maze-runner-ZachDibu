@@ -4,10 +4,18 @@ import java.util.ArrayList;
 
 public class PrimAlg {
     public String solution = null;
+    Tile start;
+    Tile end;
 
-    public PrimAlg(ArrayList<Tile>[][] arrayLists) { }
+    private ArrayList<Tile>[][] maze;
 
-    public String solveMaze(ArrayList<Tile>[][] maze){
+    public PrimAlg(ArrayList<Tile>[][] maze, Tile start, Tile end) {
+        this.maze = maze;
+        this.start = start;
+        this.end = end;
+    }
+
+    public String solveMaze(){
 
 
 
