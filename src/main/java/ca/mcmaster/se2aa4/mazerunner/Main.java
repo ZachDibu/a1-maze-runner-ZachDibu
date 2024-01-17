@@ -15,6 +15,7 @@ public class Main {
             String mazeSolution = maze.solution(); //determine the path to the exit
             boolean valid = config.validPath(config.inputPath(), maze.solution());//determine if an input path is valid
             System.out.println("**** Reading the maze from file " + config.inputFile());
+            maze.mazeArray(); //store maze in array
             maze.printMaze(logger);
 
 
