@@ -38,6 +38,4 @@ public class Main {
         System.out.println("** End of MazeRunner");
     }
 
-    //make solution a queue
-
 }

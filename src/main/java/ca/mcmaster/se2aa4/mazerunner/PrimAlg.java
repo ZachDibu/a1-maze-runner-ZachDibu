@@ -16,8 +16,12 @@ public class PrimAlg {
     }
 
     public String solveMaze(){
-
-
+        MazeRunner runner = new MazeRunner(start);
+        runner.moveR();
+        runner.moveF();
+        runner.moveL();
+        runner.moveB();
+        //do until runner.currentPosition != end
 
         return solution;
     }

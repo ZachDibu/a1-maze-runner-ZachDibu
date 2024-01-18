@@ -68,7 +68,7 @@ public class Maze {
     public Tile getStart(ArrayList<Tile>[][] mazeArray) {
         int x = 0;
         int y = 0;
-        while (mazeArray[x][y].get(0).type != "PATH"){
+        while (!mazeArray[x][y].get(0).type.equals("PATH")){
             y++;
         }
         return mazeArray[x][y].get(0);
@@ -77,7 +77,7 @@ public class Maze {
     public Tile getEnd(ArrayList<Tile>[][] mazeArray) {
         int x = width;
         int y = 0;
-        while (mazeArray[x][y].get(0).type != "PATH"){
+        while (!mazeArray[x][y].get(0).type.equals("PATH")){
             y++;
         }
         return mazeArray[x][y].get(0);
