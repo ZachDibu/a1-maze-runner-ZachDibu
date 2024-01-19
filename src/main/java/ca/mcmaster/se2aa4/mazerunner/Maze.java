@@ -6,19 +6,21 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.sql.SQLOutput;
 import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.Stack;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 public class Maze {
 
-    public Object start;
-    public Object end;
+    public Tile start;
+    public Tile end;
     public Object direction;
     private String inputFile = null;
 
-    private int width = 0;
-    private int height = 0;
+    public int width = 0;
+    public int height = 0;
 
     public Maze(String inputFile) {
         this.inputFile = inputFile;
@@ -27,18 +29,20 @@ public class Maze {
 
     public void printMaze(Logger logger, BufferedReader reader) throws IOException {
         String line;
-        while ((line = reader.readLine()) != null) {
+        line = reader.readLine();
+        this.width = line.length();
+
+        while (line != null) {
             for (int idx = 0; idx < line.length(); idx++) {
                 if (line.charAt(idx) == '#') {
                     System.out.print("WALL ");
-                    this.width++;
                 } else if (line.charAt(idx) == ' ') {
                     System.out.print("PASS ");
-                    this.width++;
                 }
             }
             System.out.print(System.lineSeparator());
             this.height++;
+            line = reader.readLine();
         }
     }
 
@@ -51,11 +55,15 @@ public class Maze {
 
         while ((line = reader.readLine()) != null) {
             for (int idx = 0; idx < line.length(); idx++) {
+                maze[x][y] = new ArrayList<>();
+
                 if (line.charAt(idx) == '#') {
-                    maze[x][y].add(new Tile("WALL",x,y));
+                    Tile newTile = new Tile("WALL",x,y);
+                    maze[x][y].add(newTile);
                     x++;
                 } else if (line.charAt(idx) == ' ') {
-                    maze[x][y].add(new Tile("PATH",x,y));
+                    Tile newTile = new Tile("PATH",x,y);
+                    maze[x][y].add(newTile);
                     x++;
                 }
             }
@@ -65,28 +73,36 @@ public class Maze {
         return maze;
     }
 
-    public Tile getStart(ArrayList<Tile>[][] mazeArray) {
+    public void getStart(ArrayList<Tile>[][] mazeArray) {
         int x = 0;
         int y = 0;
         while (!mazeArray[x][y].get(0).type.equals("PATH")){
             y++;
         }
-        return mazeArray[x][y].get(0);
+        this.start = mazeArray[x][y].get(0);
     }
 
-    public Tile getEnd(ArrayList<Tile>[][] mazeArray) {
+    public void getEnd(ArrayList<Tile>[][] mazeArray) {
         int x = width;
         int y = 0;
         while (!mazeArray[x][y].get(0).type.equals("PATH")){
             y++;
         }
-        return mazeArray[x][y].get(0);
+        this.end = mazeArray[x][y].get(0);
     }
 
 
     public String solution(ArrayList<Tile>[][] maze, Tile start, Tile end) {
-        PrimAlg alg = new PrimAlg(maze, start, end);
-        return alg.solveMaze();
+        PrimAlg mazeAlgorithm = new PrimAlg(maze, start, end);
+        Stack<String> stackSolution = mazeAlgorithm.solveMaze();
+
+        String strSolution = "";
+        Iterator value = stackSolution.iterator();
+
+        while (value.hasNext()){
+            strSolution = strSolution + value.next();
+        }
+        return strSolution;
     }
 
 

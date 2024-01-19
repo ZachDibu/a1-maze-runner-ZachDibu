@@ -14,6 +14,11 @@ public class Configuration {
     private Options options = new Options();
     private CommandLineParser parser = new DefaultParser();
 
+    public String inputFile = null;
+    public String inputPath = null;
+
+    public String mode = "MazeSolver";
+
 
     public Configuration(String[] args) {
         this.args = args;
@@ -22,20 +27,21 @@ public class Configuration {
 
     }
 
-    public String inputFile() throws ParseException{
-        String inputFile = null;
+    public void inputFile() throws ParseException{
         CommandLine cmd = parser.parse(options, args);
-        inputFile = cmd.getOptionValue("input","./examples/small.maz.txt");
-        return inputFile;
+        this.inputFile = cmd.getOptionValue("input","./examples/small.maz.txt");
     }
 
-    public String inputPath() throws ParseException{
-        String inputPath = null;
+    public void inputPath() throws ParseException{
         CommandLine cmd = parser.parse(options, args);
-        inputPath = cmd.getOptionValue("p");
-        return inputPath;
+        this.inputPath = cmd.getOptionValue("p","EMPTY");
     }
 
+    public void getMode(){
+        if (!Objects.equals(inputPath,"EMPTY")){
+            this.mode = "COMPARE";
+        }
+    }
 
     public boolean validPath(String inputPath, String mazeSolution) {
         return Objects.equals(inputPath,mazeSolution);

@@ -5,6 +5,7 @@ public class Tile {
     public int xCord;
     public int yCord;
 
+    public boolean passed = false;
 
     public Tile(String tileType, int xCord, int yCord) {
         this.type = tileType;
