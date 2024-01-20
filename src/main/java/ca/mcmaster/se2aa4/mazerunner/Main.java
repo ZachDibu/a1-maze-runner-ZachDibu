@@ -8,12 +8,18 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.Objects;
 
+import org.apache.logging.log4j.core.config.Configurator;
+import org.apache.logging.log4j.Level;
+
+
 public class Main {
 
     private static final Logger logger = LogManager.getLogger();
 
     public static void main(String[] args) {
-       try{
+        Configurator.setAllLevels(LogManager.getRootLogger().getName(), Level.ALL);
+
+        try{
             logger.info("** Starting Maze Runner");
 
             Configuration config = new Configuration(args);//read configuration from command line
