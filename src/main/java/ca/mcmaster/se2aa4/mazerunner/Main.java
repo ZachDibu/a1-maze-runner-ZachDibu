@@ -14,7 +14,7 @@ public class Main {
 
     public static void main(String[] args) {
        try{
-            System.out.println("** Starting Maze Runner");
+            logger.info("** Starting Maze Runner");
 
             Configuration config = new Configuration(args);//read configuration from command line
             config.inputFile();
@@ -22,7 +22,7 @@ public class Main {
             config.getMode();
 
             Maze maze = new Maze(config.inputFile);
-            System.out.println("**** Reading the maze from file " + config.inputFile);
+            logger.info("**** Reading the maze from file " + config.inputFile);
             maze.printMaze(logger);
 
             Tile[][] mazeArray = maze.mazeArray(); //store maze in array
@@ -33,21 +33,20 @@ public class Main {
             String mazeSolution = maze.solution(mazeArray,maze.start,maze.end); //determine the path to the exit
 
 
-            System.out.println("**** Computing path");
+            logger.info("**** Computing path");
             if (Objects.equals(config.mode,"MazeSolver")) {
-                System.out.println("Solution to maze: " + mazeSolution);
+                logger.info("Solution to maze: " + mazeSolution);
             }else{
                 boolean valid = config.validPath(config.inputPath, mazeSolution);//determine if an input path is valid
                 String result = valid? "Correct Path" : "Incorrect Path";
-                System.out.println(result);
+                logger.info(result);
             }
 
        } catch(Exception e){
-           System.err.println("/!\\ An error has occured /!\\");
-           e.printStackTrace();
+           logger.error("/!\\ An error has occured /!\\");
        }
 
-        System.out.println("** End of MazeRunner");
+        logger.info("** End of MazeRunner");
     }
 
 }

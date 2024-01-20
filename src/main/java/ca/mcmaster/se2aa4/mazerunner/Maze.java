@@ -35,12 +35,12 @@ public class Maze {
         while (line != null) {
             for (int idx = 0; idx < line.length(); idx++) {
                 if (line.charAt(idx) == '#') {
-                    System.out.print("WALL ");
+                    logger.info("WALL ");
                 } else if (line.charAt(idx) == ' ') {
-                    System.out.print("PASS ");
+                    logger.info("PASS ");
                 }
             }
-            System.out.print(System.lineSeparator());
+            logger.info(System.lineSeparator());
             this.height++;
             line = reader.readLine();
         }
