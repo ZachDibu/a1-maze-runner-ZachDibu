@@ -6,9 +6,7 @@ import org.apache.logging.log4j.Logger;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.Objects;
-import java.util.Stack;
 
 public class Main {
 
@@ -23,25 +21,15 @@ public class Main {
             config.inputPath();
             config.getMode();
 
-            BufferedReader reader = new BufferedReader(new FileReader(config.inputFile));
             Maze maze = new Maze(config.inputFile);
             System.out.println("**** Reading the maze from file " + config.inputFile);
-            maze.printMaze(logger, reader);
+            maze.printMaze(logger);
 
-            ArrayList<Tile>[][] mazeArray = maze.mazeArray(reader); //store maze in array
-            System.out.println(mazeArray[0][0]);
-            System.out.println(maze.width);
-            System.out.println(maze.height);
+            Tile[][] mazeArray = maze.mazeArray(); //store maze in array
 
+            maze.getStart(mazeArray); //get the starting tile
+            maze.getEnd(mazeArray); //get the final tile
 
-
-           System.out.println("8");
-            maze.getStart(mazeArray);
-
-            System.out.println("9");
-            maze.getEnd(mazeArray);
-
-            System.out.println("10");
             String mazeSolution = maze.solution(mazeArray,maze.start,maze.end); //determine the path to the exit
 
 

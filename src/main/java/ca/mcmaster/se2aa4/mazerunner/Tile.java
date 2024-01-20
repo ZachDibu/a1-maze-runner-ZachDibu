@@ -7,9 +7,9 @@ public class Tile {
 
     public boolean passed = false;
 
-    public Tile(String tileType, int xCord, int yCord) {
+    public Tile(String tileType, int yCord, int xCord) {
         this.type = tileType;
-        this.xCord = xCord;
         this.yCord = yCord;
+        this.xCord = xCord;
     }
 }

@@ -5,19 +5,19 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 import java.sql.SQLOutput;
-import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.Stack;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import javax.sound.midi.SysexMessage;
+
 public class Maze {
 
     public Tile start;
     public Tile end;
-    public Object direction;
-    private String inputFile = null;
+    private String inputFile;
 
     public int width = 0;
     public int height = 0;
@@ -27,9 +27,9 @@ public class Maze {
     }
 
 
-    public void printMaze(Logger logger, BufferedReader reader) throws IOException {
-        String line;
-        line = reader.readLine();
+    public void printMaze(Logger logger) throws IOException {
+        BufferedReader reader = new BufferedReader(new FileReader(inputFile));
+        String line = reader.readLine();
         this.width = line.length();
 
         while (line != null) {
@@ -44,57 +44,59 @@ public class Maze {
             this.height++;
             line = reader.readLine();
         }
+        reader.close();
     }
 
 
-    public ArrayList<Tile>[][] mazeArray(BufferedReader reader) throws IOException{
-        ArrayList<Tile>[][] maze = new ArrayList[width][height];
-        String line;
-        int x = 0;
+    public Tile[][] mazeArray() throws IOException{
+        BufferedReader reader = new BufferedReader(new FileReader(inputFile));
+        Tile[][] maze = new Tile[height][width];
+        String line = reader.readLine();
         int y = 0;
-
-        while ((line = reader.readLine()) != null) {
-            for (int idx = 0; idx < line.length(); idx++) {
-                maze[x][y] = new ArrayList<>();
-
-                if (line.charAt(idx) == '#') {
-                    Tile newTile = new Tile("WALL",x,y);
-                    maze[x][y].add(newTile);
-                    x++;
-                } else if (line.charAt(idx) == ' ') {
-                    Tile newTile = new Tile("PATH",x,y);
-                    maze[x][y].add(newTile);
-                    x++;
+        while (line != null && y < height){
+            if (line.isEmpty() || line.isBlank()) {
+                for (int x = 0; x < width; x++) {
+                    maze[y][x] = new Tile("PATH", y, x);
                 }
             }
-            x = 0;
+            for (int x = 0; x < line.length() && x < width; x++) {
+                if (line.charAt(x) == '#') {
+                    maze[y][x] = new Tile("WALL",y,x);
+                } else if (line.charAt(x) == ' ') {
+                    maze[y][x] = new Tile("PATH",y,x);
+                }
+            }
             y++;
+            line = reader.readLine();
         }
+        reader.close();
         return maze;
     }
 
-    public void getStart(ArrayList<Tile>[][] mazeArray) {
+    public void getStart(Tile[][] mazeArray) {
         int x = 0;
         int y = 0;
-        while (!mazeArray[x][y].get(0).type.equals("PATH")){
+        while (!mazeArray[y][x].type.equals("PATH")){
             y++;
         }
-        this.start = mazeArray[x][y].get(0);
+        this.start = mazeArray[y][x];
     }
 
-    public void getEnd(ArrayList<Tile>[][] mazeArray) {
-        int x = width;
+    public void getEnd(Tile[][] mazeArray) {
+        int x = width-1;
         int y = 0;
-        while (!mazeArray[x][y].get(0).type.equals("PATH")){
+        while (!mazeArray[y][x].type.equals("PATH")){
             y++;
         }
-        this.end = mazeArray[x][y].get(0);
+        this.end = mazeArray[y][x];
     }
 
 
-    public String solution(ArrayList<Tile>[][] maze, Tile start, Tile end) {
+    public String solution(Tile[][] maze, Tile start, Tile end) {
         PrimAlg mazeAlgorithm = new PrimAlg(maze, start, end);
+        System.out.println("Getting Stack solution");
         Stack<String> stackSolution = mazeAlgorithm.solveMaze();
+        System.out.println("Converting to string");
 
         String strSolution = "";
         Iterator value = stackSolution.iterator();

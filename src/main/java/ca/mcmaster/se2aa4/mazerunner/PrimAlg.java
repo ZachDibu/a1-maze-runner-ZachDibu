@@ -1,6 +1,5 @@
 package ca.mcmaster.se2aa4.mazerunner;
 
-import java.util.ArrayList;
 import java.util.Objects;
 import java.util.Stack;
 
@@ -8,31 +7,37 @@ public class PrimAlg {
     Tile start;
     Tile end;
 
-    private ArrayList<Tile>[][] maze;
+    private Tile[][] maze;
 
-    public PrimAlg(ArrayList<Tile>[][] maze, Tile start, Tile end) {
+    public PrimAlg(Tile[][] maze, Tile start, Tile end) {
         this.maze = maze;
         this.start = start;
         this.end = end;
     }
 
-    //Assuming runner would not have to move back
     public Stack<String> solveMaze(){
         MazeRunner runner = new MazeRunner(start);
         Stack<String> solution = new Stack<>();
+
+        //first move will always be forward
+        runner.move(maze[runner.currentPosition.yCord][runner.currentPosition.xCord + 1]);
+        solution.push("F");
+        runner.lastMovement = "F";
+
+        //find end of maze
         while (!Objects.equals(runner.currentPosition, end)) {
             runner.currentPosition.passed = true;
+            System.out.println(solution);
+            Tile R = maze[runner.currentPosition.yCord + 1][runner.currentPosition.xCord]; //tile right
+            Tile F = maze[runner.currentPosition.yCord][runner.currentPosition.xCord + 1]; //tile forward
+            Tile L = maze[runner.currentPosition.yCord - 1][runner.currentPosition.xCord]; //tile left
+            Tile B = maze[runner.currentPosition.yCord][runner.currentPosition.xCord - 1]; //tile backward
 
-            Tile R = maze[runner.currentPosition.xCord][runner.currentPosition.yCord - 1].get(0); //tile right
-            Tile F = maze[runner.currentPosition.xCord + 1][runner.currentPosition.yCord].get(0); //tile forward
-            Tile L = maze[runner.currentPosition.xCord][runner.currentPosition.yCord + 1].get(0); //tile left
-            Tile B = maze[runner.currentPosition.xCord - 1][runner.currentPosition.yCord].get(0); //tile backward
-
-            if (Objects.equals(R.type,"PATH") && !Objects.equals(runner.lastMovement,"L") && !Objects.equals(F,end)){
+            if (Objects.equals(R.type,"PATH") && !(Objects.equals(runner.lastMovement,"L") || Objects.equals(runner.lastMovement,"B")) && !Objects.equals(F,end)){
                 runner.move(R);
                 solution.push("R");
                 runner.lastMovement = "R";
-            } else if (Objects.equals(F.type,"PATH")) {
+            } else if (Objects.equals(F.type,"PATH")&& !Objects.equals(runner.lastMovement,"B")) {
                 runner.move(F);
                 solution.push("F");
                 runner.lastMovement = "F";
@@ -45,7 +50,6 @@ public class PrimAlg {
                 if (B.passed){solution.pop();} else{ solution.push("B");}
                 runner.lastMovement = "B";
             }
-
         }
 
         return solution;
