@@ -94,9 +94,7 @@ public class Maze {
 
     public String solution(Tile[][] maze, Tile start, Tile end) {
         PrimAlg mazeAlgorithm = new PrimAlg(maze, start, end);
-        System.out.println("Getting Stack solution");
         Stack<String> stackSolution = mazeAlgorithm.solveMaze();
-        System.out.println("Converting to string");
 
         String strSolution = "";
         Iterator value = stackSolution.iterator();

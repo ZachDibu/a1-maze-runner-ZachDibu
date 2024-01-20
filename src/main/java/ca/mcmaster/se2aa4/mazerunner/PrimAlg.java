@@ -27,7 +27,6 @@ public class PrimAlg {
         //find end of maze
         while (!Objects.equals(runner.currentPosition, end)) {
             runner.currentPosition.passed = true;
-            System.out.println(solution);
             Tile R = maze[runner.currentPosition.yCord + 1][runner.currentPosition.xCord]; //tile right
             Tile F = maze[runner.currentPosition.yCord][runner.currentPosition.xCord + 1]; //tile forward
             Tile L = maze[runner.currentPosition.yCord - 1][runner.currentPosition.xCord]; //tile left
