@@ -43,7 +43,5 @@ public class Configuration {
         }
     }
 
-    public boolean validPath(String inputPath, String mazeSolution) {
-        return Objects.equals(inputPath,mazeSolution);
-    }
+    public boolean validPath(String inputPath, String mazeSolution) {return Objects.equals(inputPath,mazeSolution);}
 }

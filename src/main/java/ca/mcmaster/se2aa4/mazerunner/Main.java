@@ -41,12 +41,14 @@ public class Main {
 
             logger.info("**** Computing path");
             if (Objects.equals(config.mode,"MazeSolver")) {
-                logger.info("Canonical Solution to maze: " + maze.canonicalSolution);
                 logger.info("Factorized Solution to maze: " + maze.factorizedSolution);
 
             }else{
-                boolean valid = config.validPath(config.inputPath, maze.canonicalSolution);//determine if an input path is valid
-                String result = valid? "Correct Path" : "Incorrect Path";
+
+                boolean validCanon = config.validPath(config.inputPath, maze.canonicalSolution);//determine if an input path is valid
+                boolean validFact = config.validPath(config.inputPath, maze.factorizedSolution.replace(" ", ""));
+
+                String result = (validCanon || validFact)? "Correct Path" : "Incorrect Path";
                 logger.info(result);
             }
 

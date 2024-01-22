@@ -17,8 +17,7 @@ public class Maze {
 
     public Tile start;
     public Tile end;
-    private String inputFile;
-
+    public String inputFile;
     public int width = 0;
     public int height = 0;
 
@@ -119,7 +118,7 @@ public class Maze {
                 count = 1;
             }
         }
-        factSol = factSol + count + canonicalSolution.charAt(canonicalSolution.length()-1) + " ";
+        factSol = factSol + count + canonicalSolution.charAt(canonicalSolution.length()-1);
         factorizedSolution = factSol;
     }
 
