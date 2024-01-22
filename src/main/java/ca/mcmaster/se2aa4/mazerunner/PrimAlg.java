@@ -7,7 +7,7 @@ public class PrimAlg {
     Tile start;
     Tile end;
 
-    private Tile[][] maze;
+    private final Tile[][] maze;
 
     public PrimAlg(Tile[][] maze, Tile start, Tile end) {
         this.maze = maze;
@@ -53,4 +53,5 @@ public class PrimAlg {
 
         return solution;
     }
+
 }

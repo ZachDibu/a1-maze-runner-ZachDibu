@@ -5,16 +5,14 @@ import org.apache.commons.cli.CommandLine;
 import org.apache.commons.cli.CommandLineParser;
 import org.apache.commons.cli.DefaultParser;
 import org.apache.commons.cli.ParseException;
-import org.apache.logging.log4j.Logger;
 
 import java.util.Objects;
-import java.util.Scanner;
 
 public class Configuration {
 
-    private String[] args = null;
-    private Options options = new Options();
-    private CommandLineParser parser = new DefaultParser();
+    private final String[] args;
+    private final Options options = new Options();
+    private final CommandLineParser parser = new DefaultParser();
 
     public String inputFile = null;
     public String inputPath = null;

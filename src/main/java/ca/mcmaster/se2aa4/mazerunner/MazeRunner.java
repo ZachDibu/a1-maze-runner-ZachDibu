@@ -1,7 +1,7 @@
 package ca.mcmaster.se2aa4.mazerunner;
 
 public class MazeRunner {
-    Tile currentPosition = null;
+    Tile currentPosition;
     public String lastMovement = null;
     public MazeRunner(Tile start) {
         this.currentPosition = start;

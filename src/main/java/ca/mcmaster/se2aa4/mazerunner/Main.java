@@ -3,9 +3,6 @@ package ca.mcmaster.se2aa4.mazerunner;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import java.io.BufferedReader;
-import java.io.FileReader;
-import java.io.IOException;
 import java.util.Objects;
 import java.util.Scanner;
 
@@ -32,7 +29,7 @@ public class Main {
 
             Maze maze = new Maze(config.inputFile);
             logger.info("**** Reading the maze from file " + config.inputFile);
-            maze.printMaze(logger);
+            maze.printMaze();
 
             Tile[][] mazeArray = maze.mazeArray(); //store maze in array
 
@@ -40,11 +37,12 @@ public class Main {
             maze.getEnd(mazeArray); //get the final tile
 
             maze.setCanonicalSolution(mazeArray,maze.start,maze.end); //determine the path to the exit
+            maze.convertCanonical();
             maze.setFactorizedSolution();
 
             logger.info("**** Computing path");
             if (Objects.equals(config.mode,"MazeSolver")) {
-                logger.info("Factorized Solution to maze: " + maze.factorizedSolution);
+                logger.info("Solution to maze: " + maze.factorizedSolution);
 
             }else{
 
@@ -77,8 +75,6 @@ public class Main {
             logger.info("Enter New Path: ");
             input = scanner.nextLine();
             config.setNewInputPath(input);
-        } else{
-            return;
         }
 
     }
