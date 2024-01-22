@@ -37,7 +37,7 @@ public class Main {
             maze.getEnd(mazeArray); //get the final tile
 
             String mazeSolution = maze.solution(mazeArray,maze.start,maze.end); //determine the path to the exit
-
+            mazeSolution = maze.convertCanonical(mazeSolution);
 
             logger.info("**** Computing path");
             if (Objects.equals(config.mode,"MazeSolver")) {
