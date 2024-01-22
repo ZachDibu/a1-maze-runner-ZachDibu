@@ -36,14 +36,14 @@ public class Main {
             maze.getStart(mazeArray); //get the starting tile
             maze.getEnd(mazeArray); //get the final tile
 
-            String mazeSolution = maze.solution(mazeArray,maze.start,maze.end); //determine the path to the exit
+            maze.solution(mazeArray,maze.start,maze.end); //determine the path to the exit
 
 
             logger.info("**** Computing path");
             if (Objects.equals(config.mode,"MazeSolver")) {
-                logger.info("Solution to maze: " + mazeSolution);
+                logger.info("Solution to maze: " + maze.canonicalSolution);
             }else{
-                boolean valid = config.validPath(config.inputPath, mazeSolution);//determine if an input path is valid
+                boolean valid = config.validPath(config.inputPath, maze.canonicalSolution);//determine if an input path is valid
                 String result = valid? "Correct Path" : "Incorrect Path";
                 logger.info(result);
             }

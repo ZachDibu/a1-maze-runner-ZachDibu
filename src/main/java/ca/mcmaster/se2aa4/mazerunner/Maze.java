@@ -22,6 +22,8 @@ public class Maze {
     public int width = 0;
     public int height = 0;
 
+    public String canonicalSolution;
+
     public Maze(String inputFile) {
         this.inputFile = inputFile;
     }
@@ -92,7 +94,7 @@ public class Maze {
     }
 
 
-    public String solution(Tile[][] maze, Tile start, Tile end) {
+    public void solution(Tile[][] maze, Tile start, Tile end) {
         PrimAlg mazeAlgorithm = new PrimAlg(maze, start, end);
         Stack<String> stackSolution = mazeAlgorithm.solveMaze();
 
@@ -102,7 +104,7 @@ public class Maze {
         while (value.hasNext()){
             strSolution = strSolution + value.next();
         }
-        return strSolution;
+        canonicalSolution = strSolution;
     }
 
 
