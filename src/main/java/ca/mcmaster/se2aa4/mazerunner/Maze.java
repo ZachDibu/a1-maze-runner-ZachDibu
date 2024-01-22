@@ -23,6 +23,7 @@ public class Maze {
     public int height = 0;
 
     public String canonicalSolution;
+    public String factorizedSolution;
 
     public Maze(String inputFile) {
         this.inputFile = inputFile;
@@ -94,7 +95,7 @@ public class Maze {
     }
 
 
-    public void solution(Tile[][] maze, Tile start, Tile end) {
+    public void setCanonicalSolution(Tile[][] maze, Tile start, Tile end) {
         PrimAlg mazeAlgorithm = new PrimAlg(maze, start, end);
         Stack<String> stackSolution = mazeAlgorithm.solveMaze();
 
@@ -105,6 +106,21 @@ public class Maze {
             strSolution = strSolution + value.next();
         }
         canonicalSolution = strSolution;
+    }
+
+    public void setFactorizedSolution(){
+        String factSol = "";
+        int count = 1;
+        for (int i = 0, j = 1; j < canonicalSolution.length(); i++, j++){ //LLRRRFF
+            if (canonicalSolution.charAt(j) == canonicalSolution.charAt(i)){
+                count++;
+            }else{
+                factSol = factSol + count + canonicalSolution.charAt(i) + " ";
+                count = 1;
+            }
+        }
+        factSol = factSol + count + canonicalSolution.charAt(canonicalSolution.length()-1) + " ";
+        factorizedSolution = factSol;
     }
 
 

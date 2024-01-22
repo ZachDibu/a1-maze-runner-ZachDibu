@@ -36,12 +36,14 @@ public class Main {
             maze.getStart(mazeArray); //get the starting tile
             maze.getEnd(mazeArray); //get the final tile
 
-            maze.solution(mazeArray,maze.start,maze.end); //determine the path to the exit
-
+            maze.setCanonicalSolution(mazeArray,maze.start,maze.end); //determine the path to the exit
+            maze.setFactorizedSolution();
 
             logger.info("**** Computing path");
             if (Objects.equals(config.mode,"MazeSolver")) {
-                logger.info("Solution to maze: " + maze.canonicalSolution);
+                logger.info("Canonical Solution to maze: " + maze.canonicalSolution);
+                logger.info("Factorized Solution to maze: " + maze.factorizedSolution);
+
             }else{
                 boolean valid = config.validPath(config.inputPath, maze.canonicalSolution);//determine if an input path is valid
                 String result = valid? "Correct Path" : "Incorrect Path";
