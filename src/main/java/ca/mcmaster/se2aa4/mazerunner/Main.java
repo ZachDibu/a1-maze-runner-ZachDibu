@@ -7,6 +7,7 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.Objects;
+import java.util.Scanner;
 
 import org.apache.logging.log4j.core.config.Configurator;
 import org.apache.logging.log4j.Level;
@@ -16,16 +17,18 @@ public class Main {
 
     private static final Logger logger = LogManager.getLogger();
 
+    private static final Scanner scanner = new Scanner(System.in);
+
     public static void main(String[] args) {
         Configurator.setAllLevels(LogManager.getRootLogger().getName(), Level.ALL);
 
+        logger.info("** Starting Maze Runner");
         try{
-            logger.info("** Starting Maze Runner");
 
             Configuration config = new Configuration(args);//read configuration from command line
-            config.inputFile();
-            config.inputPath();
-            config.getMode();
+            config.setInputFile();
+            config.setInputPath();
+            config.setMode();
 
             Maze maze = new Maze(config.inputFile);
             logger.info("**** Reading the maze from file " + config.inputFile);
@@ -52,11 +55,32 @@ public class Main {
                 logger.info(result);
             }
 
+
        } catch(Exception e){
            logger.error("/!\\ An error has occured /!\\");
        }
 
         logger.info("** End of MazeRunner");
+    }
+
+    public void getInput(Configuration config){
+        String input;
+        logger.info("Type \"-i\" or \"--input\" to enter a new maze file");
+        logger.info("Type \"-p\" to try a new path");
+        logger.info("Type anything else to end Maze Runner");
+        input = scanner.nextLine();
+        if (Objects.equals(input, "-i") || Objects.equals(input, "--input")){
+            logger.info("Enter New File: ");
+            input = scanner.nextLine();
+            config.setNewInputFile(input);
+        } else if (Objects.equals(input, "-p")){
+            logger.info("Enter New Path: ");
+            input = scanner.nextLine();
+            config.setNewInputPath(input);
+        } else{
+            return;
+        }
+
     }
 
 }

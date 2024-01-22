@@ -5,8 +5,10 @@ import org.apache.commons.cli.CommandLine;
 import org.apache.commons.cli.CommandLineParser;
 import org.apache.commons.cli.DefaultParser;
 import org.apache.commons.cli.ParseException;
+import org.apache.logging.log4j.Logger;
 
 import java.util.Objects;
+import java.util.Scanner;
 
 public class Configuration {
 
@@ -27,17 +29,25 @@ public class Configuration {
 
     }
 
-    public void inputFile() throws ParseException{
+    public void setInputFile() throws ParseException{
         CommandLine cmd = parser.parse(options, args);
         this.inputFile = cmd.getOptionValue("input","./examples/small.maz.txt");
     }
 
-    public void inputPath() throws ParseException{
+    public void setNewInputFile(String newInputFile){
+        this.inputFile = newInputFile;
+    }
+
+    public void setInputPath() throws ParseException{
         CommandLine cmd = parser.parse(options, args);
         this.inputPath = cmd.getOptionValue("p","EMPTY");
     }
 
-    public void getMode(){
+    public void setNewInputPath(String newInputPath){
+        this.inputPath = newInputPath;
+    }
+
+    public void setMode(){
         if (!Objects.equals(inputPath,"EMPTY")){
             this.mode = "COMPARE";
         }
