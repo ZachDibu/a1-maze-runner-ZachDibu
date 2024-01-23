@@ -15,6 +15,8 @@ public class Maze {
 
     public String canonicalSolution;
     public String reverseCanonicalSolution;
+    public String factorizedSolution;
+    public String reverseFactorizedSolution;
 
 
     public Maze(String inputFile) {
