@@ -44,7 +44,7 @@ public class Main {
                 } else if (Objects.equals(input, "-p")) {
                     logger.info("Enter New Path: ");
                     input = scanner.nextLine();
-                    config.inputPath = input;
+                    config.inputPath = input.replace(" ", "");
                     logger.info("The new path is: " + config.inputPath);
                     config.mode = "COMPARE";
                 } else{
@@ -93,7 +93,6 @@ public class Main {
         if (Objects.equals(config.mode,"COMPARE")) {
             boolean validCanon = config.validPath(config.inputPath, maze.canonicalSolution);//determine if an input path is valid
             boolean validFact = config.validPath(config.inputPath, maze.factorizedSolution.replace(" ", ""));
-
             String result = (validCanon || validFact) ? "Correct Path" : "Incorrect Path";
             logger.info(result);
         }
