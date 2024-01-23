@@ -7,6 +7,8 @@ public class MazeSolution extends Maze {
     public String reverseCanonicalSolution;
     public String factorizedSolution;
     public String reverseFactorizedSolution;
+    public String inputCanonical;
+
     public MazeSolution(String inputFile) {
         super(inputFile);
     }
@@ -99,5 +101,20 @@ public class MazeSolution extends Maze {
             }
         }
         this.reverseCanonicalSolution = reverseCanonical.toString();
+    }
+
+    public void convertCanonical(String inputPath){
+        StringBuilder newPath = new StringBuilder();
+        for (int i = 0; i < inputPath.length(); i++){
+            if (Character.isDigit(inputPath.charAt(i))){
+                char nextChar = inputPath.charAt(i+1);
+                for (int j = Character.getNumericValue(inputPath.charAt(i)) - 1 ; j > 0; j--){
+                    newPath.append(nextChar);
+                }
+            }else{
+                newPath.append(inputPath.charAt(i));
+            }
+        }
+        inputCanonical = newPath.toString();
     }
 }

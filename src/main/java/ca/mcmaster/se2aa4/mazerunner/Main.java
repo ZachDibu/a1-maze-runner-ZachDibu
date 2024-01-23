@@ -28,8 +28,7 @@ public class Main {
             config.setMode();
 
             do {
-                MazeSolution solution = display_solution(config);
-                display_path(config, solution);
+                display_solution(config);
 
                 String input;
                 logger.info("Type \"-i\" or \"--input\" to enter a new maze file");
@@ -38,15 +37,13 @@ public class Main {
                 input = scanner.nextLine().toLowerCase();
                 if (Objects.equals(input, "-i") || Objects.equals(input, "--input")) {
                     logger.info("Enter New File: ");
-                    input = scanner.nextLine();
-                    config.inputFile = input;
+                    config.inputFile = scanner.nextLine();
                     logger.info("The new file is: " + config.inputFile);
                     config.mode = "MazeSolver";
 
                 } else if (Objects.equals(input, "-p")) {
                     logger.info("Enter New Path: ");
-                    input = scanner.nextLine();
-                    config.inputPath = input.replace(" ", "");
+                    config.inputPath = scanner.nextLine().replace(" ", "").toUpperCase();
                     logger.info("The new path is: " + config.inputPath);
                     config.mode = "COMPARE";
                 } else{
@@ -63,19 +60,19 @@ public class Main {
         logger.info("** End of MazeRunner");
     }
 
-    public static MazeSolution display_solution(Configuration config) throws IOException{
+    public static void display_solution(Configuration config) throws IOException{
         Maze maze = new Maze(config.inputFile);
 
         maze.printMaze();
 
-        Tile[][] mazeArray = maze.mazeArray(); //store maze in array
+        maze.mazeArray(); //store maze in array
 
-        maze.getStart(mazeArray); //get the starting tile
-        maze.getEnd(mazeArray); //get the final tile
+        maze.getStart(maze.mazeArray); //get the starting tile
+        maze.getEnd(maze.mazeArray); //get the final tile
 
         MazeSolution solution = new MazeSolution(maze.inputFile);
 
-        solution.canonicalSolution(mazeArray, maze.start, maze.end); //determine the canonical path to the exit
+        solution.canonicalSolution(maze.mazeArray, maze.start, maze.end); //determine the canonical path to the exit
         solution.convertCanonical();
         solution.factorizedSolution = solution.factorizeSolution(solution.canonicalSolution);
         solution.reverseCanonical();
@@ -88,14 +85,16 @@ public class Main {
             logger.info("Solution from other end: " + solution.reverseFactorizedSolution);
         }
 
-        return solution;
+        display_path(config, solution, maze); //display path if in correct mode
+
     }
 
-    public static void display_path(Configuration config, MazeSolution solution){
+    public static void display_path(Configuration config, MazeSolution solution, Maze maze){
         if (Objects.equals(config.mode,"COMPARE")) {
-            boolean validCanon = config.validPath(config.inputPath, solution.canonicalSolution);//determine if an input path is valid
-            boolean validFact = config.validPath(config.inputPath, solution.factorizedSolution.replace(" ", ""));
-            String result = (validCanon || validFact) ? "Correct Path" : "Incorrect Path";
+
+            solution.convertCanonical(config.inputPath.replace(" ", "")); //convert input path to canonical form
+            PrimAlg alg = new PrimAlg(maze.mazeArray, maze.start, maze.end);
+            String result = (alg.validate_path(solution.inputCanonical)) ? "Correct Path" : "Incorrect Path";
             logger.info(result);
         }
     }

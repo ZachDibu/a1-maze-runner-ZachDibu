@@ -41,6 +41,4 @@ public class Configuration {
             this.mode = "COMPARE";
         }
     }
-
-    public boolean validPath(String inputPath, String mazeSolution) {return Objects.equals(inputPath,mazeSolution);}
 }

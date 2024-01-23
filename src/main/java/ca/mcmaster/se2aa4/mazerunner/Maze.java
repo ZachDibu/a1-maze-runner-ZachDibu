@@ -12,8 +12,7 @@ public class Maze {
     public int width = 0;
     public int height = 0;
 
-
-
+    public Tile[][] mazeArray;
 
     public Maze(String inputFile) {
         this.inputFile = inputFile;
@@ -41,7 +40,7 @@ public class Maze {
     }
 
 
-    public Tile[][] mazeArray() throws IOException{
+    public void mazeArray() throws IOException{
         BufferedReader reader = new BufferedReader(new FileReader(inputFile));
         Tile[][] maze = new Tile[height][width];
         String line = reader.readLine();
@@ -63,7 +62,7 @@ public class Maze {
             line = reader.readLine();
         }
         reader.close();
-        return maze;
+        this.mazeArray =  maze;
     }
 
     public void getStart(Tile[][] mazeArray) {
