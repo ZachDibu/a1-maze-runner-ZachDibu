@@ -14,7 +14,8 @@ public class Maze {
     public int height = 0;
 
     public String canonicalSolution;
-    public String factorizedSolution;
+    public String reverseCanonicalSolution;
+
 
     public Maze(String inputFile) {
         this.inputFile = inputFile;
@@ -98,7 +99,7 @@ public class Maze {
         canonicalSolution = strSolution.toString();
     }
 
-    public void setFactorizedSolution(){
+    public String factorizeSolution(String canonicalSolution){
         StringBuilder factSol = new StringBuilder();
         int count = 1;
         for (int i = 0, j = 1; j < canonicalSolution.length(); i++, j++){
@@ -110,7 +111,7 @@ public class Maze {
             }
         }
         factSol.append(count).append(canonicalSolution.charAt(canonicalSolution.length()-1));
-        factorizedSolution = factSol.toString();
+        return factSol.toString();
     }
 
 //takes into account the direction a person would be facing as travelling though a maze.
@@ -161,4 +162,19 @@ public class Maze {
         }
         this.canonicalSolution = newCanon.toString();
     }
+
+    public void reverseCanonical() {
+        StringBuilder reverseCanonical = new StringBuilder();
+        for (int i = canonicalSolution.length()-1; i >= 0; i--){
+            if (canonicalSolution.charAt(i) == 'R'){
+                reverseCanonical.append("L");
+            } else if (canonicalSolution.charAt(i) == 'L'){
+                reverseCanonical.append("R");
+            } else{
+                reverseCanonical.append(canonicalSolution.charAt(i));
+            }
+        }
+        this.reverseCanonicalSolution = reverseCanonical.toString();
+    }
+
 }

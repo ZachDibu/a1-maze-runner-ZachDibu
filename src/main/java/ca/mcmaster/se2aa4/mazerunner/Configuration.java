@@ -32,17 +32,9 @@ public class Configuration {
         this.inputFile = cmd.getOptionValue("input","./examples/small.maz.txt");
     }
 
-    public void setNewInputFile(String newInputFile){
-        this.inputFile = newInputFile;
-    }
-
     public void setInputPath() throws ParseException{
         CommandLine cmd = parser.parse(options, args);
         this.inputPath = cmd.getOptionValue("p","EMPTY");
-    }
-
-    public void setNewInputPath(String newInputPath){
-        this.inputPath = newInputPath;
     }
 
     public void setMode(){

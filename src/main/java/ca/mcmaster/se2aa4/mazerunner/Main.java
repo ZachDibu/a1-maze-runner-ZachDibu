@@ -36,18 +36,21 @@ public class Main {
             maze.getStart(mazeArray); //get the starting tile
             maze.getEnd(mazeArray); //get the final tile
 
-            maze.setCanonicalSolution(mazeArray,maze.start,maze.end); //determine the path to the exit
+            maze.setCanonicalSolution(mazeArray,maze.start,maze.end); //determine the canonical path to the exit
             maze.convertCanonical();
-            maze.setFactorizedSolution();
+            String factorizedSolution = maze.factorizeSolution(maze.canonicalSolution);
+            maze.reverseCanonical();
+            String reverseFactorizedSolution = maze.factorizeSolution(maze.reverseCanonicalSolution);
 
             logger.info("**** Computing path");
-            if (Objects.equals(config.mode,"MazeSolver")) {
-                logger.info("Solution to maze: " + maze.factorizedSolution);
 
+            if (Objects.equals(config.mode,"MazeSolver")) {
+                logger.info("Solution to maze: " + factorizedSolution);
+                logger.info("Solution from other end: " + reverseFactorizedSolution);
             }else{
 
                 boolean validCanon = config.validPath(config.inputPath, maze.canonicalSolution);//determine if an input path is valid
-                boolean validFact = config.validPath(config.inputPath, maze.factorizedSolution.replace(" ", ""));
+                boolean validFact = config.validPath(config.inputPath, factorizedSolution.replace(" ", ""));
 
                 String result = (validCanon || validFact)? "Correct Path" : "Incorrect Path";
                 logger.info(result);
@@ -70,11 +73,11 @@ public class Main {
         if (Objects.equals(input, "-i") || Objects.equals(input, "--input")){
             logger.info("Enter New File: ");
             input = scanner.nextLine();
-            config.setNewInputFile(input);
+            config.inputFile = input;
         } else if (Objects.equals(input, "-p")){
             logger.info("Enter New Path: ");
             input = scanner.nextLine();
-            config.setNewInputPath(input);
+            config.inputPath = input;
         }
 
     }
