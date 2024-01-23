@@ -54,4 +54,41 @@ public class PrimAlg {
         return solution;
     }
 
+    public boolean validate_path(String inputPath){
+        MazeRunner runner = new MazeRunner(start);
+        String direction = "EAST";
+        for (int i = 0; i < inputPath.length(); i++){
+            switch (inputPath.charAt(i)) {
+                case 'F':
+                    switch (direction){
+                        case "EAST": runner.move(maze[runner.currentPosition.yCord][runner.currentPosition.xCord + 1]); break;
+                        case "NORTH": runner.move(maze[runner.currentPosition.yCord - 1][runner.currentPosition.xCord]); break;
+                        case "WEST": runner.move(maze[runner.currentPosition.yCord][runner.currentPosition.xCord - 1]); break;
+                        case "SOUTH": runner.move(maze[runner.currentPosition.yCord + 1][runner.currentPosition.xCord]); break;
+                    }
+                    break;
+                case 'L':
+                    direction = switch (direction) {
+                        case "EAST" -> "NORTH";
+                        case "NORTH" -> "WEST";
+                        case "WEST" -> "SOUTH";
+                        case "SOUTH" -> "EAST";
+                        default -> direction;
+                    };
+                    break;
+                case 'R':
+                    direction = switch (direction) {
+                        case "EAST" -> "SOUTH";
+                        case "NORTH" -> "EAST";
+                        case "WEST" -> "NORTH";
+                        case "SOUTH" -> "WEST";
+                        default -> direction;
+                    };
+                    break;
+            }
+            if (runner.currentPosition.type.equals("WALL")){return false;}
+        }
+        return Objects.equals(runner.currentPosition, end);
+    }
+
 }
