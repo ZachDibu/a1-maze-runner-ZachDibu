@@ -40,54 +40,6 @@ public class MazeSolution extends Maze {
         return factSol.toString();
     }
 
-    //takes into account the direction a person would be facing as travelling though a maze.
-// R and L only turn, F moves forward
-    public void convertCanonical() {
-        StringBuilder newCanon = new StringBuilder();
-        String direction = "EAST";
-
-        for (int i = 0; i < canonicalSolution.length(); i++){
-            switch (canonicalSolution.charAt(i)) {
-                case 'F':
-                    switch (direction){
-                        case "EAST": newCanon.append("F"); break;
-                        case "NORTH": newCanon.append("RF"); break;
-                        case "WEST": newCanon.append("LLF"); break;
-                        case "SOUTH": newCanon.append("LF"); break;
-                    }
-                    direction = "EAST";
-                    break;
-                case 'L':
-                    switch (direction){
-                        case "EAST": newCanon.append("LF"); break;
-                        case "NORTH": newCanon.append("F"); break;
-                        case "WEST": newCanon.append("RF"); break;
-                        case "SOUTH": newCanon.append("LLF"); break;
-                    }
-                    direction = "NORTH";
-                    break;
-                case 'R':
-                    switch (direction){
-                        case "EAST": newCanon.append("RF"); break;
-                        case "NORTH": newCanon.append("LLF"); break;
-                        case "WEST": newCanon.append("LF"); break;
-                        case "SOUTH": newCanon.append("F"); break;
-                    }
-                    direction = "SOUTH";
-                    break;
-                case 'B':
-                    switch (direction){
-                        case "EAST": newCanon.append("LLF"); break;
-                        case "NORTH": newCanon.append("LF"); break;
-                        case "WEST": newCanon.append("F"); break;
-                        case "SOUTH": newCanon.append("RF"); break;
-                    }
-                    direction = "WEST";
-                    break;
-            }
-        }
-        this.canonicalSolution = newCanon.toString();
-    }
 
     public void reverseCanonical() {
         StringBuilder reverseCanonical = new StringBuilder();
@@ -103,12 +55,18 @@ public class MazeSolution extends Maze {
         this.reverseCanonicalSolution = reverseCanonical.toString();
     }
 
-    public void convertCanonical(String inputPath){
+    public void convertCanonical(String inputPath){ //need to check if there are more than 1 digit in a row
         StringBuilder newPath = new StringBuilder();
         for (int i = 0; i < inputPath.length(); i++){
             if (Character.isDigit(inputPath.charAt(i))){
+                int num = Character.getNumericValue(inputPath.charAt(i));
                 char nextChar = inputPath.charAt(i+1);
-                for (int j = Character.getNumericValue(inputPath.charAt(i)) - 1 ; j > 0; j--){
+                while (Character.isDigit(nextChar)){
+                    num = num*10+Character.getNumericValue(nextChar);
+                    i++;
+                    nextChar = inputPath.charAt(i+1);
+                }
+                for (int j = num - 1 ; j > 0; j--){
                     newPath.append(nextChar);
                 }
             }else{

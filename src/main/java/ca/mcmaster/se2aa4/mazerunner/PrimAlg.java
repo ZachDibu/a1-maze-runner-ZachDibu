@@ -19,38 +19,109 @@ public class PrimAlg {
         MazeRunner runner = new MazeRunner(start);
         Stack<String> solution = new Stack<>();
 
-        //first move will always be forward
+        //first move is always forward
         runner.move(maze[runner.currentPosition.yCord][runner.currentPosition.xCord + 1]);
         solution.push("F");
-        runner.lastMovement = "F";
 
         //find end of maze
         while (!Objects.equals(runner.currentPosition, end)) {
             runner.currentPosition.passed = true;
-            Tile R = maze[runner.currentPosition.yCord + 1][runner.currentPosition.xCord]; //tile right
-            Tile F = maze[runner.currentPosition.yCord][runner.currentPosition.xCord + 1]; //tile forward
-            Tile L = maze[runner.currentPosition.yCord - 1][runner.currentPosition.xCord]; //tile left
-            Tile B = maze[runner.currentPosition.yCord][runner.currentPosition.xCord - 1]; //tile backward
+            Tile S = maze[runner.currentPosition.yCord + 1][runner.currentPosition.xCord];//tile SOUTH
+            Tile W = maze[runner.currentPosition.yCord][runner.currentPosition.xCord - 1];//tile WEST
+            Tile N = maze[runner.currentPosition.yCord - 1][runner.currentPosition.xCord];//tile NORTH
+            Tile E = maze[runner.currentPosition.yCord][runner.currentPosition.xCord + 1];//tile EAST
 
-            if (Objects.equals(R.type,"PATH") && !(Objects.equals(runner.lastMovement,"L") || Objects.equals(runner.lastMovement,"B")) && !Objects.equals(F,end)){
-                runner.move(R);
-                solution.push("R");
-                runner.lastMovement = "R";
-            } else if (Objects.equals(F.type,"PATH")&& !Objects.equals(runner.lastMovement,"B")) {
-                runner.move(F);
-                solution.push("F");
-                runner.lastMovement = "F";
-            } else if (Objects.equals(L.type,"PATH")) {
-                runner.move(L);
-                if (L.passed){solution.pop();} else{ solution.push("L");}
-                runner.lastMovement = "L";
-            } else {
-                runner.move(B);
-                if (B.passed){solution.pop();} else{ solution.push("B");}
-                runner.lastMovement = "B";
+            //based off of current direction, check to the right
+            switch (runner.direction){
+                case "EAST":
+                    if (Objects.equals(S.type,"PATH")){
+                        runner.move(S);
+                        runner.direction = "SOUTH";
+                        solution.push("RF");
+                        break;
+                    } else if (Objects.equals(E.type,"PATH")){
+                        runner.move(E);
+                        solution.push("F");
+                        break;
+                    } else if (Objects.equals(N.type,"PATH")){
+                        runner.move(N);
+                        runner.direction = "NORTH";
+                        solution.push("LF");
+                        break;
+                    } else {
+                        runner.move(W);
+                        runner.direction = "WEST";
+                        solution.push("RRF");
+                        break;
+                    }
+
+                case "SOUTH":
+                    if (Objects.equals(W.type,"PATH")){
+                        runner.move(W);
+                        runner.direction = "WEST";
+                        solution.push("RF");
+                        break;
+                    } else if (Objects.equals(S.type,"PATH")){
+                        runner.move(S);
+                        solution.push("F");
+                        break;
+                    } else if (Objects.equals(E.type,"PATH")){
+                        runner.move(E);
+                        runner.direction = "EAST";
+                        solution.push("LF");
+                        break;
+                    } else {
+                        runner.move(N);
+                        runner.direction = "NORTH";
+                        solution.push("RRF");
+                        break;
+                    }
+
+                case "WEST":
+                    if (Objects.equals(N.type,"PATH")){
+                        runner.move(N);
+                        runner.direction = "NORTH";
+                        solution.push("RF");
+                        break;
+                    } else if (Objects.equals(W.type,"PATH")){
+                        runner.move(W);
+                        solution.push("F");
+                        break;
+                    } else if (Objects.equals(S.type,"PATH")){
+                        runner.move(S);
+                        runner.direction = "SOUTH";
+                        solution.push("LF");
+                        break;
+                    } else {
+                        runner.move(E);
+                        runner.direction = "EAST";
+                        solution.push("RRF");
+                        break;
+                    }
+
+                case "NORTH":
+                    if (Objects.equals(E.type,"PATH")){
+                        runner.move(E);
+                        runner.direction = "EAST";
+                        solution.push("RF");
+                        break;
+                    } else if (Objects.equals(N.type,"PATH")){
+                        runner.move(N);
+                        solution.push("F");
+                        break;
+                    } else if (Objects.equals(W.type,"PATH")){
+                        runner.move(W);
+                        runner.direction = "WEST";
+                        solution.push("LF");
+                        break;
+                    } else {
+                        runner.move(S);
+                        runner.direction = "SOUTH";
+                        solution.push("RRF");
+                        break;
+                    }
             }
         }
-
         return solution;
     }
 

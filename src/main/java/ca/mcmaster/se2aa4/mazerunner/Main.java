@@ -41,8 +41,9 @@ public class Main {
                     config.mode = "MazeSolver";
                 } else if (Objects.equals(input, "-p")) {
                     logger.info("Enter New Path: ");
-                    config.inputPath = scanner.nextLine().replace(" ", "").toUpperCase();
+                    config.inputPath = scanner.nextLine();
                     logger.info("The new path is: " + config.inputPath);
+                    config.inputPath = config.inputPath.replace(" ", "").toUpperCase();
                     config.mode = "COMPARE";
                 } else if (Objects.equals(input, "-r")){
                     config.mode = "REVERSE";
@@ -70,7 +71,6 @@ public class Main {
         MazeSolution solution = new MazeSolution(maze.inputFile);
 
         solution.canonicalSolution(maze.mazeArray, maze.start, maze.end); //determine the canonical path to the exit
-        solution.convertCanonical();
         solution.factorizedSolution = solution.factorizeSolution(solution.canonicalSolution);
         solution.reverseCanonical();
         solution.reverseFactorizedSolution = solution.factorizeSolution(solution.reverseCanonicalSolution);
