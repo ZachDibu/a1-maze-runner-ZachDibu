@@ -29,42 +29,39 @@ public class Main {
 
             do {
                 display_solution(config);
-
-                String input;
                 logger.info("Type \"-i\" or \"--input\" to enter a new maze file");
                 logger.info("Type \"-p\" to try a new path");
+                logger.info("Type \"-r\" to show solution from opposite direction");
                 logger.info("Type anything else to end Maze Runner");
-                input = scanner.nextLine().toLowerCase();
+                String input = scanner.nextLine().toLowerCase();
                 if (Objects.equals(input, "-i") || Objects.equals(input, "--input")) {
                     logger.info("Enter New File: ");
                     config.inputFile = scanner.nextLine();
                     logger.info("The new file is: " + config.inputFile);
                     config.mode = "MazeSolver";
-
                 } else if (Objects.equals(input, "-p")) {
                     logger.info("Enter New Path: ");
                     config.inputPath = scanner.nextLine().replace(" ", "").toUpperCase();
                     logger.info("The new path is: " + config.inputPath);
                     config.mode = "COMPARE";
-                } else{
+                } else if (Objects.equals(input, "-r")){
+                    config.mode = "REVERSE";
+                } else {
                     break;
                 }
-
             }while(true);
 
        } catch(Exception e){
            logger.error("/!\\ An error has occurred /!\\");
            return;
        }
-
         logger.info("** End of MazeRunner");
     }
 
     public static void display_solution(Configuration config) throws IOException{
+
         Maze maze = new Maze(config.inputFile);
-
         maze.printMaze();
-
         maze.mazeArray(); //store maze in array
 
         maze.getStart(maze.mazeArray); //get the starting tile
@@ -82,21 +79,15 @@ public class Main {
 
         if (Objects.equals(config.mode,"MazeSolver")) {
             logger.info("Solution to maze: " + solution.factorizedSolution);
+        }else if (Objects.equals(config.mode,"REVERSE")){
             logger.info("Solution from other end: " + solution.reverseFactorizedSolution);
-        }
-
-        display_path(config, solution, maze); //display path if in correct mode
-
-    }
-
-    public static void display_path(Configuration config, MazeSolution solution, Maze maze){
-        if (Objects.equals(config.mode,"COMPARE")) {
-
+        }else if (Objects.equals(config.mode,"COMPARE")) {
             solution.convertCanonical(config.inputPath.replace(" ", "")); //convert input path to canonical form
             PrimAlg alg = new PrimAlg(maze.mazeArray, maze.start, maze.end);
             String result = (alg.validate_path(solution.inputCanonical)) ? "Correct Path" : "Incorrect Path";
             logger.info(result);
         }
     }
+
 
 }
