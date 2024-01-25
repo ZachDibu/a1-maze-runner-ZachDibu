@@ -1,33 +1,25 @@
 package ca.mcmaster.se2aa4.mazerunner;
 
 import java.io.BufferedReader;
-import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
-import java.sql.SQLOutput;
-import java.util.Iterator;
-import java.util.Stack;
-
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
-
-import javax.sound.midi.SysexMessage;
 
 public class Maze {
 
     public Tile start;
     public Tile end;
-    private String inputFile;
-
+    public String inputFile;
     public int width = 0;
     public int height = 0;
+
+    public Tile[][] mazeArray;
 
     public Maze(String inputFile) {
         this.inputFile = inputFile;
     }
 
 
-    public void printMaze(Logger logger) throws IOException {
+    public void printMaze() throws IOException {
         BufferedReader reader = new BufferedReader(new FileReader(inputFile));
         String line = reader.readLine();
         this.width = line.length();
@@ -48,7 +40,7 @@ public class Maze {
     }
 
 
-    public Tile[][] mazeArray() throws IOException{
+    public void mazeArray() throws IOException{
         BufferedReader reader = new BufferedReader(new FileReader(inputFile));
         Tile[][] maze = new Tile[height][width];
         String line = reader.readLine();
@@ -70,7 +62,7 @@ public class Maze {
             line = reader.readLine();
         }
         reader.close();
-        return maze;
+        this.mazeArray =  maze;
     }
 
     public void getStart(Tile[][] mazeArray) {
@@ -92,18 +84,6 @@ public class Maze {
     }
 
 
-    public String solution(Tile[][] maze, Tile start, Tile end) {
-        PrimAlg mazeAlgorithm = new PrimAlg(maze, start, end);
-        Stack<String> stackSolution = mazeAlgorithm.solveMaze();
-
-        String strSolution = "";
-        Iterator value = stackSolution.iterator();
-
-        while (value.hasNext()){
-            strSolution = strSolution + value.next();
-        }
-        return strSolution;
-    }
 
     //takes into account the direction a person would be facing as travelling though a maze.
 // R and L only turn, F moves forward
