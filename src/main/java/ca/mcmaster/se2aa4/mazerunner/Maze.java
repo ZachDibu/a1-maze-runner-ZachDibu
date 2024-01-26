@@ -19,6 +19,7 @@ public class Maze {
     }
 
 
+    //prints maze and determines dimensions of maze
     public void printMaze() throws IOException {
         BufferedReader reader = new BufferedReader(new FileReader(inputFile));
         String line = reader.readLine();
@@ -39,7 +40,7 @@ public class Maze {
         reader.close();
     }
 
-
+    //instantiates each tile of the maze and stores it in a 2D array of type Tile
     public void mazeArray() throws IOException{
         BufferedReader reader = new BufferedReader(new FileReader(inputFile));
         Tile[][] maze = new Tile[height][width];
@@ -65,6 +66,7 @@ public class Maze {
         this.mazeArray =  maze;
     }
 
+    //finds the starting Tile
     public void getStart(Tile[][] mazeArray) {
         int x = 0;
         int y = 0;
@@ -74,6 +76,7 @@ public class Maze {
         this.start = mazeArray[y][x];
     }
 
+    //Find the end Tile
     public void getEnd(Tile[][] mazeArray) {
         int x = width-1;
         int y = 0;
@@ -82,57 +85,5 @@ public class Maze {
         }
         this.end = mazeArray[y][x];
     }
-
-
-
-    //takes into account the direction a person would be facing as travelling though a maze.
-// R and L only turn, F moves forward
-    public String convertCanonical(String canonicalSolution) {
-        StringBuilder newCanon = new StringBuilder();
-        String direction = "EAST";
-
-        for (int i = 0; i < canonicalSolution.length(); i++){
-            switch (canonicalSolution.charAt(i)) {
-                case 'F':
-                    switch (direction){
-                        case "EAST": newCanon.append("F"); break;
-                        case "NORTH": newCanon.append("RF"); break;
-                        case "WEST": newCanon.append("LLF"); break;
-                        case "SOUTH": newCanon.append("LF"); break;
-                    }
-                    direction = "EAST";
-                    break;
-                case 'L':
-                    switch (direction){
-                        case "EAST": newCanon.append("LF"); break;
-                        case "NORTH": newCanon.append("F"); break;
-                        case "WEST": newCanon.append("RF"); break;
-                        case "SOUTH": newCanon.append("LLF"); break;
-                    }
-                    direction = "NORTH";
-                    break;
-                case 'R':
-                    switch (direction){
-                        case "EAST": newCanon.append("RF"); break;
-                        case "NORTH": newCanon.append("LLF"); break;
-                        case "WEST": newCanon.append("LF"); break;
-                        case "SOUTH": newCanon.append("F"); break;
-                    }
-                    direction = "SOUTH";
-                    break;
-                case 'B':
-                    switch (direction){
-                        case "EAST": newCanon.append("LLF"); break;
-                        case "NORTH": newCanon.append("LF"); break;
-                        case "WEST": newCanon.append("F"); break;
-                        case "SOUTH": newCanon.append("RF"); break;
-                    }
-                    direction = "WEST";
-                    break;
-            }
-        }
-        return newCanon.toString();
-    }
-
 
 }
