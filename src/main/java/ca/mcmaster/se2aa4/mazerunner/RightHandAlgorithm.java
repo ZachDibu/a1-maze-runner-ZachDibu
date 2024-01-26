@@ -3,18 +3,19 @@ package ca.mcmaster.se2aa4.mazerunner;
 import java.util.Objects;
 import java.util.Stack;
 
-public class PrimAlg {
+public class RightHandAlgorithm implements MazeAlgorithm {
     Tile start;
     Tile end;
 
     private final Tile[][] maze;
 
-    public PrimAlg(Tile[][] maze, Tile start, Tile end) {
+    public RightHandAlgorithm(Tile[][] maze, Tile start, Tile end) {
         this.maze = maze;
         this.start = start;
         this.end = end;
     }
 
+    @Override
     public Stack<String> solveMaze(){
         MazeRunner runner = new MazeRunner(start);
         Stack<String> solution = new Stack<>();
@@ -125,6 +126,7 @@ public class PrimAlg {
         return solution;
     }
 
+    @Override
     public boolean validate_path(String inputPath){
         MazeRunner runner = new MazeRunner(start);
         String direction = "EAST";

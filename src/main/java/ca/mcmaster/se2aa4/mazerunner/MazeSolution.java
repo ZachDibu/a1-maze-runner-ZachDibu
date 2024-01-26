@@ -14,7 +14,7 @@ public class MazeSolution extends Maze {
     }
 
     public void canonicalSolution(Tile[][] maze, Tile start, Tile end) {
-        PrimAlg mazeAlgorithm = new PrimAlg(maze, start, end);
+        MazeAlgorithm mazeAlgorithm = new RightHandAlgorithm(maze, start, end);
         Stack<String> stackSolution = mazeAlgorithm.solveMaze();
 
         StringBuilder strSolution = new StringBuilder();

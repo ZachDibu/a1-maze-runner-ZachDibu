@@ -83,7 +83,7 @@ public class Main {
             logger.info("Solution from other end: " + solution.reverseFactorizedSolution);
         }else if (Objects.equals(config.mode,"COMPARE")) {
             solution.convertCanonical(config.inputPath.replace(" ", "")); //convert input path to canonical form
-            PrimAlg alg = new PrimAlg(maze.mazeArray, maze.start, maze.end);
+            MazeAlgorithm alg = new RightHandAlgorithm(maze.mazeArray, maze.start, maze.end);
             String result = (alg.validate_path(solution.inputCanonical)) ? "Correct Path" : "Incorrect Path";
             logger.info(result);
         }
