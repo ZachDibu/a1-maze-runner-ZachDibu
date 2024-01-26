@@ -1,5 +1,5 @@
 package ca.mcmaster.se2aa4.mazerunner;
-
+//keeps track of the person's current position as they move through the maze
 public class MazeRunner {
     Tile currentPosition;
     public String direction = "EAST";

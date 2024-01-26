@@ -19,6 +19,7 @@ public class Maze {
     }
 
 
+    //prints maze and determines dimensions of maze
     public void printMaze() throws IOException {
         BufferedReader reader = new BufferedReader(new FileReader(inputFile));
         String line = reader.readLine();
@@ -39,7 +40,7 @@ public class Maze {
         reader.close();
     }
 
-
+    //instantiates each tile of the maze and stores it in a 2D array of type Tile
     public void mazeArray() throws IOException{
         BufferedReader reader = new BufferedReader(new FileReader(inputFile));
         Tile[][] maze = new Tile[height][width];
@@ -65,6 +66,7 @@ public class Maze {
         this.mazeArray =  maze;
     }
 
+    //finds the starting Tile
     public void getStart(Tile[][] mazeArray) {
         int x = 0;
         int y = 0;
@@ -74,6 +76,7 @@ public class Maze {
         this.start = mazeArray[y][x];
     }
 
+    //Find the end Tile
     public void getEnd(Tile[][] mazeArray) {
         int x = width-1;
         int y = 0;

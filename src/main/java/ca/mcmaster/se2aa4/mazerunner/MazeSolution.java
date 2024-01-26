@@ -13,6 +13,7 @@ public class MazeSolution extends Maze {
         super(inputFile);
     }
 
+    //finds the canonical solution of a maze using a MazeAlgorithm.
     public void canonicalSolution(Tile[][] maze, Tile start, Tile end) {
         MazeAlgorithm mazeAlgorithm = new RightHandAlgorithm(maze, start, end);
         Stack<String> stackSolution = mazeAlgorithm.solveMaze();
@@ -25,6 +26,7 @@ public class MazeSolution extends Maze {
         canonicalSolution = strSolution.toString();
     }
 
+    //factorizes a canonical solution
     public String factorizeSolution(String canonicalSolution){
         StringBuilder factSol = new StringBuilder();
         int count = 1;
@@ -40,7 +42,7 @@ public class MazeSolution extends Maze {
         return factSol.toString();
     }
 
-
+    //reverses a canonical solution.
     public void reverseCanonical() {
         StringBuilder reverseCanonical = new StringBuilder();
         for (int i = canonicalSolution.length()-1; i >= 0; i--){
@@ -55,7 +57,8 @@ public class MazeSolution extends Maze {
         this.reverseCanonicalSolution = reverseCanonical.toString();
     }
 
-    public void convertCanonical(String inputPath){ //need to check if there are more than 1 digit in a row
+    //Converts an input path into a canonical form for checking
+    public void convertCanonical(String inputPath){
         StringBuilder newPath = new StringBuilder();
         for (int i = 0; i < inputPath.length(); i++){
             if (Character.isDigit(inputPath.charAt(i))){

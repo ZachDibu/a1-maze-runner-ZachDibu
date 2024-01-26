@@ -1,8 +1,8 @@
 package ca.mcmaster.se2aa4.mazerunner;
+//implements the right hand algorithm to find the solution of a maze
 
 import java.util.Objects;
 import java.util.Stack;
-
 public class RightHandAlgorithm implements MazeAlgorithm {
     Tile start;
     Tile end;

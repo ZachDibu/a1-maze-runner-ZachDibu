@@ -26,16 +26,19 @@ public class Configuration {
 
     }
 
+    //finds the input file
     public void setInputFile() throws ParseException{
         CommandLine cmd = parser.parse(options, args);
         this.inputFile = cmd.getOptionValue("input","./examples/small.maz.txt");
     }
 
+    //finds the input path
     public void setInputPath() throws ParseException{
         CommandLine cmd = parser.parse(options, args);
         this.inputPath = cmd.getOptionValue("p","EMPTY");
     }
 
+    //sets the initial mode based on the presence of an input path
     public void setMode(){
         if (!Objects.equals(inputPath,"EMPTY")){
             this.mode = "COMPARE";
