@@ -29,13 +29,18 @@ public class Configuration {
     //finds the input file
     public void setInputFile() throws ParseException{
         CommandLine cmd = parser.parse(options, args);
-        this.inputFile = cmd.getOptionValue("input","./examples/small.maz.txt");
+        String input = cmd.getOptionValue("input","./examples/small.maz.txt");
+        input = input.replace("\"", "");
+        this.inputFile = input;
     }
 
     //finds the input path
     public void setInputPath() throws ParseException{
         CommandLine cmd = parser.parse(options, args);
-        this.inputPath = cmd.getOptionValue("p","EMPTY");
+        String input = cmd.getOptionValue("p","EMPTY");
+        input = input.replace("\"", "");
+        input = input.replace(" ", "");
+        this.inputPath = input;
     }
 
     //sets the initial mode based on the presence of an input path

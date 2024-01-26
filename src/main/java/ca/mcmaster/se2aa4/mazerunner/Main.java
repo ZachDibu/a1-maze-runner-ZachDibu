@@ -36,7 +36,7 @@ public class Main {
                 String input = scanner.nextLine().toLowerCase();
                 if (Objects.equals(input, "-i") || Objects.equals(input, "--input")) {
                     logger.info("Enter New File: ");
-                    config.inputFile = scanner.nextLine();
+                    config.inputFile = scanner.nextLine().replace("\"", "");
                     logger.info("The new file is: " + config.inputFile);
                     config.mode = "MazeSolver";
                 } else if (Objects.equals(input, "-p")) {
