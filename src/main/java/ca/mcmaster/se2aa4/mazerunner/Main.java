@@ -60,7 +60,6 @@ public class Main {
     }
 
     public static void display_solution(Configuration config) throws IOException{
-
         Maze maze = new Maze(config.inputFile);
         maze.printMaze();
         maze.mazeArray(); //store maze in array
